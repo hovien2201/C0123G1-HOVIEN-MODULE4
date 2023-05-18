@@ -12,7 +12,7 @@ public class UngDungTuDienService implements IUngdungTuDienService {
 
     @Override
     public String traCuu(String english) {
-        String str=iUngDungTuDienRepo.traCuu(english);
+        String str = iUngDungTuDienRepo.traCuu(english);
         return str;
     }
 }

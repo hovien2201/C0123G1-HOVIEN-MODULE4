@@ -14,14 +14,15 @@ public class UngDungTuDien {
     IUngdungTuDienService iUngdungTuDienService;
 
     @GetMapping("/")
-    public String dieuHuong(){
+    public String dieuHuong() {
         return "index";
     }
+
     @PostMapping("/tra")
-    public String traCuu(@RequestParam("english")String english, Model model){
-        String vietnamese=iUngdungTuDienService.traCuu(english);
-        model.addAttribute("vietnamese",vietnamese);
-        model.addAttribute("english",english);
+    public String traCuu(@RequestParam("english") String english, Model model) {
+        String vietnamese = iUngdungTuDienService.traCuu(english);
+        model.addAttribute("vietnamese", vietnamese);
+        model.addAttribute("english", english);
         return "index";
     }
 }

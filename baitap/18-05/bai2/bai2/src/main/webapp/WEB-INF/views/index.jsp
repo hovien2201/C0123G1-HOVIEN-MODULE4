@@ -10,10 +10,11 @@
 <head>
     <title>Title</title>
     <style>
-        label{
+        label {
             margin-top: 30px;
         }
-        .container{
+
+        .container {
             margin-left: 35%;
             margin-right: 35%;
             margin-top: 15%;
@@ -29,9 +30,9 @@
         <lable>English</lable>
         <input name="english" placeholder="English" style="margin-left: 60px" value="${english}">
         <br>
-        <div style="display: flex" >
-        <lable style="padding-top: 27px;margin-right: 20px">Vietnamese:</lable>
-        <h4 style="font-size: 20px">${vietnamese}</h4>
+        <div style="display: flex">
+            <lable style="padding-top: 27px;margin-right: 20px">Vietnamese:</lable>
+            <h4 style="font-size: 20px">${vietnamese}</h4>
         </div>
         <br>
         <button type="submit" style="font-size: 30px">Search</button>
