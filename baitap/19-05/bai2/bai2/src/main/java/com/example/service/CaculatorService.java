@@ -20,6 +20,8 @@ public class CaculatorService implements ICaculatorService {
             case "/":
                 result = number1/number2;
                 break;
+            default:
+                result=0;
         }
         return result;
     }
