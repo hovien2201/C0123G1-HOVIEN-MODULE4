@@ -6,6 +6,16 @@ public class Settings {
     private Boolean spamsFilter;
     private String signature;
 
+    public Settings() {
+    }
+
+    public Settings(String languages, Integer pageSize, Boolean spamsFilter, String signature) {
+        this.languages = languages;
+        this.pageSize = pageSize;
+        this.spamsFilter = spamsFilter;
+        this.signature = signature;
+    }
+
     public String getLanguages() {
         return languages;
     }
