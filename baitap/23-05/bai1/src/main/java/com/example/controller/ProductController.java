@@ -33,8 +33,19 @@ public class ProductController {
 
     @PostMapping("/save")
     public String save(RedirectAttributes redirectAttributes, @ModelAttribute("product") Product product) {
+        List<Product> productList=productService.findAll();
+        boolean check=true;
+        for (int i = 0; i < productList.size(); i++) {
+            if (product.getId()==productList.get(i).getId()){
+                redirectAttributes.addFlashAttribute("message", "This ID already exists");
+                check=false;
+                break;
+            }
+        }
+        if (check){
         productService.save(product);
         redirectAttributes.addFlashAttribute("mess", "Add new product successfully");
+        }
         return "redirect:/";
     }
 
