@@ -1,20 +1,35 @@
 package com.example.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name",columnDefinition = "VARCHAR(50)",nullable =true)
     private String name;
+
     private int price;
-    private String describe;
+    private String description;
     private String manufacture;
 
     public Product() {
+    }
+
+    public Product(String name, int price, String description, String manufacture) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.manufacture = manufacture;
     }
 
     public Product(int id, String name, int price, String describe, String manufacture) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.describe = describe;
+        this.description = describe;
         this.manufacture = manufacture;
     }
 
@@ -42,12 +57,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getManufacture() {

@@ -3,55 +3,56 @@ package com.example.repository;
 import com.example.model.Product;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityTransaction;
 import java.util.*;
+
+import static com.example.repository.BaseRepository.entityManager;
 
 @Repository
 public class ProductRepo implements IProductRepo{
-    private static Map<Integer, Product> products;
-    static {
-        products=new HashMap<>();
-        products.put(1,new Product(1,"Iphone",5000000,"mau trang","Apple"));
-        products.put(2,new Product(2,"Samsung",2000000,"mau den","samsung"));
-        products.put(3,new Product(3,"oppo",8000000,"mau vang","oppo"));
-        products.put(4,new Product(4,"nokia",3000000,"mau trang","nokia"));
-        products.put(5,new Product(5,"redmi",5500000,"mau den","redmi"));
-    }
 
     @Override
     public List<Product> findAll() {
-        List<Product> productList=new ArrayList<>(products.values());
+        List<Product> productList= entityManager.createQuery("select p from Product p order by p.id desc ", Product.class).getResultList();;
         return productList;
     }
 
     @Override
     public void save(Product product) {
-        products.put(product.getId(), product);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(product);
+        transaction.commit();
     }
 
     @Override
     public Product findById(int id) {
-        return products.get(id);
+        Product product = entityManager.find(Product.class, id);
+        return product;
     }
 
     @Override
-    public void update(int id, Product product) {
-        products.replace(id,product);
+    public void update( Product product) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(product);
+        transaction.commit();
     }
 
     @Override
     public void remove(int id) {
-        products.remove(id);
+        Product product=findById(id);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(product);
+        transaction.commit();
     }
 
     @Override
     public List<Product> findByName(String name) {
-        Set<Integer> set=products.keySet();
-        List<Product> productList=new ArrayList<>();
-        for (Integer s:set) {
-            if (products.get(s).getName().equals(name)){
-                productList.add(products.get(s));
-            }
-        }
+        List<Product> productList = entityManager.createQuery("SELECT p FROM Product p WHERE p.name like :name", Product.class)
+                .setParameter("name", "%"+name+"%")
+                .getResultList();
         return productList;
     }
 }

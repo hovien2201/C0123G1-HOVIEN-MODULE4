@@ -22,6 +22,8 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.3.Final'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'org.springframework', name: 'spring-core', version: '5.3.20'
     implementation group: 'org.springframework', name: 'spring-context', version: '5.3.20'
@@ -38,4 +40,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
