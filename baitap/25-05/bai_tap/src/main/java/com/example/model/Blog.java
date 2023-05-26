@@ -30,6 +30,18 @@ public class Blog {
     @NonNull
     private String author;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Blog() {
     }
 
@@ -48,6 +60,16 @@ public class Blog {
         this.createAt = createAt;
         this.updateAt = updateAt;
         this.author = author;
+    }
+
+    public Blog(Integer id, @NonNull String title, @NonNull String content, @NonNull LocalDateTime createAt, LocalDateTime updateAt, @NonNull String author, Category category) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.author = author;
+        this.category = category;
     }
 
     public Integer getId() {

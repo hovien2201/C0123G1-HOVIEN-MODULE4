@@ -10,75 +10,70 @@
 
 <body>
 <div class="container" style="margin-top: 100px">
-    <h1 style="text-align: center">Blog Manager</h1>
+    <h1 style="text-align: center">Category Manager</h1>
     <div style="display: flex">
-        <a th:href="@{/create}" style="margin-bottom: 20px">
-            <button class="btn btn-outline-primary">Create Blog</button>
+        <a th:href="@{/category/createCategory}" style="margin-bottom: 20px">
+            <button class="btn btn-outline-primary">Create category</button>
         </a>
-        <form action="#" th:action="@{/search}"
-              method="POST" style="margin-left: 55%;display: flex">
-            <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Title</span>
-                </div>
-                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                       name="title" th:value="${title}"/>
-            </div>
-            <button type="submit" class="btn btn-outline-dark" style="margin-left: 5%;height: 45px">Search</button>
-        </form>
-        <a th:href="@{/}">
-            <button class="btn btn-outline-primary" style="margin-left: 20px;height: 45px">reset list</button>
-        </a>
-    </div>
-    <div style="text-align: center">
-        <a th:href="@{/category/}" style="margin-bottom: 20px">
-            <button class="btn btn-outline-primary">Category Manager</button>
-        </a>
+        <!--    <form action="#" th:action="@{/search}"-->
+        <!--          method="POST" style="margin-left: 55%;display: flex">-->
+        <!--      <div class="input-group input-group-sm mb-3">-->
+        <!--        <div class="input-group-prepend">-->
+        <!--          <span class="input-group-text">Title</span>-->
+        <!--        </div>-->
+        <!--        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"-->
+        <!--               name="title" th:value="${title}"/>-->
+        <!--      </div>-->
+        <!--      <button type="submit" class="btn btn-outline-dark" style="margin-left: 5%;height: 45px">Search</button>-->
+        <!--    </form>-->
+        <!--    <a th:href="@{/}">-->
+        <!--      <button class="btn btn-outline-primary" style="margin-left: 20px;height: 45px">reset list</button>-->
+        <!--    </a>-->
     </div>
     <table class="table table-striped" style="border: 1px solid;margin-top: 30px;text-align: center" id="product">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Create time</th>
-            <th>Category</th>
+            <th>Category Name</th>
+            <th>isDelete</th>
             <th style="padding-left: 5%">Function</th>
 
         </tr>
         </thead>
         <tbody>
-        <tr th:each="blog : ${blogList}">
-            <td th:text="${blog.getId()}"></td>
-            <td th:text="${blog.getTitle()}"></td>
-            <td th:text="${blog.getAuthor()}"></td>
-            <td th:text="${blog.getCreateAt()}"></td>
-            <td th:text="${blog.category.categoryName}"></td>
-            <td style="padding-left: 65px"><a th:href="@{/{id}/edit(id=${blog.getId()})}">
+        <tr th:each="category : ${categoryList}">
+            <td th:text="${category.categoryId}"></td>
+            <td th:text="${category.categoryName}"></td>
+            <td th:text="${category.delete}"></td>
+            <td style="padding-left: 65px"><a th:href="@{/category/{id}/editCategory(id=${category.getCategoryId()})}">
                 <button class="btn btn-outline-primary">Edit</button>
             </a>
-                <button type="button" th:attr="onclick=|infoDelete(${blog.getId()},'${blog.getAuthor()}')|" ;
+                <button type="button"
+                        th:attr="onclick=|infoDelete(${category.getCategoryId()},'${category.categoryName}')|" ;
                         class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                     Delete
                 </button>
-                <a th:href="@{/{id}/view(id=${blog.getId()})}">
-                    <button class="btn btn-outline-primary">view</button>
-                </a>
             </td>
 
 
         </tr>
         </tbody>
     </table>
+    <p>
+        <a th:href="@{/}">
+            <button class="btn btn-outline-danger" style="margin-left: 575px;margin-top: 30px">Back to list blog
+            </button>
+        </a>
+    </p>
     <div>
-        <a th:href="@{/(page = ${blogList.number -1})}" th:if="${blogList.hasPrevious()}"
+        <a th:href="@{/category/(page = ${categoryList.number -1})}" th:if="${categoryList.hasPrevious()}"
            class="btn btn-outline-primary">Previous</a>
-        <span th:each="pageNo : ${#numbers.sequence(0,blogList.getTotalPages()-1)}">
-            <a th:text="${pageNo}" th:href="@{/(page=${pageNo})}" class="btn"
+        <span th:each="pageNo : ${#numbers.sequence(0,categoryList.getTotalPages()-1)}">
+            <a th:text="${pageNo}" th:href="@{/category/(page=${pageNo})}" class="btn"
                style="height: 35px;width: 40px;border: 1px solid black;color: black;background-color: white"></a>
         </span>
-        <a th:href="@{/(page = ${blogList.number +1})}" th:if="${blogList.hasNext()}" class="btn btn-outline-primary">Next</a>
+        <a th:href="@{/category/(page = ${categoryList.number +1})}" th:if="${categoryList.hasNext()}" class="btn btn-outline-primary">Next</a>
     </div>
     <h3 th:text="${mess}" style="color: green"></h3>
     <h3 th:text="${message}" style="color: red"></h3>
@@ -94,11 +89,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <form th:action="@{/delete}" method="get">
+            <form th:action="@{/category/deleteCategory}" method="get">
                 <div class="modal-body">
                     <input hidden id="deleteId" name="id">
-                    <span>Do you want to delete blog of author </span><span style="color: #b91515"
-                                                                            id="deleteName"></span><span>??</span>
+                    <span>Do you want to delete category </span><span style="color: #b91515"
+                                                                      id="deleteName"></span><span>??</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

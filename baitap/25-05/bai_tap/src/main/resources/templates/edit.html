@@ -37,18 +37,34 @@
                 <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                        th:field="*{author}"/>
             </div>
-            <div class="input-group input-group-sm mb-3" style="display: none" >
+            <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" >Create time</span>
+                    <span class="input-group-text">Category</span>
+                </div>
+                <select th:field="*{category}">
+                    <option th:each="category:${categoryList}" th:text="${category.categoryName}"
+                            th:value="${category.categoryId}" th:if="${category.getDelete()}"></option>
+                </select>
+            </div>
+            <div class="input-group input-group-sm mb-3" style="display: none">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Create time</span>
                 </div>
                 <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                        th:field="*{createAt}"/>
+            </div>
+            <div class="input-group input-group-sm mb-3" style="display: none">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Create time</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                       th:field="*{updateAt}"/>
             </div>
             <button type="submit" class="btn btn-outline-primary" style="margin-left: 600px">Save</button>
         </form>
         <p>
             <a th:href="@{/}">
-                <button class="btn btn-outline-danger" style="margin-left: 575px;margin-top: 30px">Back to  list
+                <button class="btn btn-outline-danger" style="margin-left: 575px;margin-top: 30px">Back to list
                 </button>
             </a>
         </p>

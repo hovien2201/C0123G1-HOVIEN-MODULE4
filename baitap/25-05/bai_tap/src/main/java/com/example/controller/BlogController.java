@@ -1,8 +1,12 @@
 package com.example.controller;
 
 import com.example.model.Blog;
+import com.example.model.Category;
 import com.example.service.IBlogService;
+import com.example.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,25 +20,30 @@ import java.util.List;
 public class BlogController {
     @Autowired
     private IBlogService iBlogService;
+    @Autowired
+    private ICategoryService iCategoryService;
 
     @GetMapping("/")
-    public String getAll(Model model) {
-        List<Blog> blogList = iBlogService.getAll();
+    public String getAll(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Blog> blogList = iBlogService.getAll(page);
         model.addAttribute("blogList", blogList);
         return "index";
     }
 
+
     @GetMapping("/create")
-    public String viewCreate(Model model) {
+    public String addBlog(Model model) {
+        List<Category> categoryList = iCategoryService.findAll();
         model.addAttribute("blog", new Blog());
+        model.addAttribute("categoryList", categoryList);
         return "create";
     }
 
     @PostMapping("/save")
-    public String createStudent(@ModelAttribute("blog") Blog blog, BindingResult bindingResult, RedirectAttributes redirect) {
+    public String createBlog(@ModelAttribute("blog") Blog blog, BindingResult bindingResult, RedirectAttributes redirect) {
         LocalDateTime createAt = LocalDateTime.now();
         blog.setCreateAt(createAt);
-        redirect.addFlashAttribute("mess", "Add student successfully");
+        redirect.addFlashAttribute("mess", "Add Blog successfully");
         iBlogService.save(blog);
         return "redirect:/";
     }
@@ -45,6 +54,7 @@ public class BlogController {
         redirectAttributes.addFlashAttribute("mess", "delete successfully");
         return "redirect:/";
     }
+
 
     @GetMapping("/{id}/view")
     public String detailByPathVariable(@PathVariable("id") Integer id,
@@ -57,6 +67,8 @@ public class BlogController {
     @GetMapping("{id}/edit")
     public String edit(@PathVariable Integer id, Model model) {
         Blog blog = iBlogService.getBlogById(id);
+        List<Category> categoryList = iCategoryService.findAll();
+        model.addAttribute("categoryList", categoryList);
         model.addAttribute("blog", blog);
         return "edit";
     }
@@ -70,8 +82,8 @@ public class BlogController {
     }
 
     @PostMapping("/search")
-    public String search(@RequestParam("title") String title, Model model) {
-        List<Blog> blogList = iBlogService.findAllByTitleContaining(title);
+    public String search(@RequestParam("title") String title, Model model,@RequestParam(value = "page", defaultValue = "0") int page) {
+        List<Blog> blogList = iBlogService.findAllByTitle(title);
         model.addAttribute("blogList", blogList);
         model.addAttribute("title", title);
         return "index";
