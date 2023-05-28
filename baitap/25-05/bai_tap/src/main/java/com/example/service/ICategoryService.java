@@ -12,5 +12,4 @@ public interface ICategoryService {
 
     Category findById(Integer id);
 
-    boolean delete(Integer id);
 }
