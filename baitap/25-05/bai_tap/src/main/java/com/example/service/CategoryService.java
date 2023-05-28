@@ -35,15 +35,5 @@ public class CategoryService implements ICategoryService{
         return iCategoryRepository.findById(id).get();
     }
 
-    @Override
-    public boolean delete(Integer id) {
-        List<Blog> blogList=iBlogRepository.findAll();
-        for (int i = 0; i < blogList.size(); i++) {
-            if (blogList.get(i).getCategory().getCategoryId()==id){
-                return false;
-            }
-        }
-        iCategoryRepository.deleteById(id);
-        return true;
-    }
+
 }
