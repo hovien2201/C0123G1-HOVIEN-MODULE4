@@ -1,8 +1,8 @@
 package com.example.bai2.controller;
 
-import com.example.bai2.dto.BaiHatDTO;
-import com.example.bai2.model.BaiHat;
-import com.example.bai2.service.IBaiHatService;
+import com.example.bai2.dto.SongDTO;
+import com.example.bai2.model.Song;
+import com.example.bai2.service.ISongService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,56 +16,56 @@ import java.util.List;
 
 
 @Controller
-public class BaiHatController {
+public class SongController {
     @Autowired
-    private IBaiHatService iBaiHatService;
+    private ISongService iSongService;
 
     @GetMapping("/")
     public String getAll(Model model) {
-        List<BaiHat> baiHatList = iBaiHatService.findAll();
-        model.addAttribute("baiHatList", baiHatList);
+        List<Song> songList = iSongService.findAll();
+        model.addAttribute("baiHatList", songList);
         return "index";
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("baiHatDTO", new BaiHatDTO());
+        model.addAttribute("baiHatDTO", new SongDTO());
         return "create";
     }
 
     @PostMapping("/save")
-    public String save(@Validated @ModelAttribute("baiHatDTO") BaiHatDTO baiHatDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        new BaiHatDTO().validate(baiHatDTO, bindingResult);
+    public String save(@Validated @ModelAttribute("baiHatDTO") SongDTO baiHatDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        new SongDTO().validate(baiHatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "create";
         } else {
+            Song song = new Song();
+            BeanUtils.copyProperties(baiHatDTO, song);
+            iSongService.save(song);
             redirectAttributes.addFlashAttribute("mess", "Thêm bài hát mới thành công");
-            BaiHat baiHat = new BaiHat();
-            BeanUtils.copyProperties(baiHatDTO, baiHat);
-            iBaiHatService.save(baiHat);
             return "redirect:/";
         }
     }
 
     @GetMapping("{id}/edit")
     public String edit(@PathVariable Integer id, Model model) {
-        BaiHat baiHat = iBaiHatService.getBlogById(id);
-        BaiHatDTO baiHatDTO=new BaiHatDTO();
-        BeanUtils.copyProperties(baiHat, baiHatDTO);
-        model.addAttribute("baiHatDTO", baiHatDTO);
+        Song song = iSongService.getBlogById(id);
+        SongDTO songDTO=new SongDTO();
+        BeanUtils.copyProperties(song, songDTO);
+        model.addAttribute("baiHatDTO", songDTO);
         return "edit";
     }
 
     @PostMapping("/edit")
-    public String update(@Validated @ModelAttribute("baiHatDTO") BaiHatDTO baiHatDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        new BaiHatDTO().validate(baiHatDTO, bindingResult);
+    public String update(@Validated @ModelAttribute("baiHatDTO") SongDTO baiHatDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        new SongDTO().validate(baiHatDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return "edit";
         } else {
+            Song song = new Song();
+            BeanUtils.copyProperties(baiHatDTO, song);
+            iSongService.save(song);
             redirectAttributes.addFlashAttribute("mess", "Chỉnh sửa bài hát  thành công");
-            BaiHat baiHat = new BaiHat();
-            BeanUtils.copyProperties(baiHatDTO, baiHat);
-            iBaiHatService.save(baiHat);
             return "redirect:/";
         }
     }

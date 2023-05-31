@@ -21,8 +21,6 @@ public class UserDTO implements Validator {
     @Size(min = 5, max = 45, message = "Tên không được quá 45 kí tự hoặc dưới 5 kí tự!")
     @NotBlank(message = "Tên không được để trống")
     private String lastName;
-    @NotBlank(message = "Password không được để trống.")
-    private String password;
     @NotBlank(message = "Số điện thoại ko được để trống")
     @Pattern(regexp = "^0\\d{9}$", message = "Số điện thoại phải có 10 số,bắt đầu bằng số 0")
     private String phoneNumber;
@@ -44,20 +42,18 @@ public class UserDTO implements Validator {
         this.id = id;
     }
 
-    public UserDTO(String firstName, String lastName, String password, String phoneNumber, String age, String email) {
+    public UserDTO(String firstName, String lastName, String phoneNumber, String age, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.age = age;
         this.email = email;
     }
 
-    public UserDTO(Integer id, String firstName, String lastName, String password, String phoneNumber, String age, String email) {
+    public UserDTO(Integer id, String firstName, String lastName, String phoneNumber, String age, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = password;
         this.phoneNumber = phoneNumber;
         this.age = age;
         this.email = email;
@@ -77,14 +73,6 @@ public class UserDTO implements Validator {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhoneNumber() {

@@ -20,7 +20,7 @@ public class UserController {
     private IUserServie iUserServie;
 
     @GetMapping("")
-    public String login(Model model) {
+    public String signup(Model model) {
         model.addAttribute("userDTO", new UserDTO());
         return "index";
     }

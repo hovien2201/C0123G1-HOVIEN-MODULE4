@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class BaiHatDTO implements Validator {
+public class SongDTO implements Validator {
     private Integer id;
     @Size(max = 45, message = "Tên bài hát không được quá 800 kí tự !")
     @NotBlank(message = "Tên bài hát không được để trống")
@@ -23,10 +23,10 @@ public class BaiHatDTO implements Validator {
     private String author;
 
 
-    public BaiHatDTO() {
+    public SongDTO() {
     }
 
-    public BaiHatDTO(Integer id, String title, String category, String author) {
+    public SongDTO(Integer id, String title, String category, String author) {
         this.id = id;
         this.title = title;
         this.category = category;

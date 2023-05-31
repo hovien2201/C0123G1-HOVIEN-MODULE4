@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class BaiHat {
+public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -14,11 +14,11 @@ public class BaiHat {
     private String author;
 
 
-    public BaiHat() {
+    public Song() {
     }
 
 
-    public BaiHat(Integer id, String title, String category, String author) {
+    public Song(Integer id, String title, String category, String author) {
         this.id = id;
         this.title = title;
         this.category = category;
