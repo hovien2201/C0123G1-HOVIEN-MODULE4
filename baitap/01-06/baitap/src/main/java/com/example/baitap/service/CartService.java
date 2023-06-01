@@ -64,8 +64,10 @@ public class CartService implements ICartService{
             cart.put(product,1);
         } else {
             Map.Entry<Product, Integer> itemEntry = selectItemInCart(product,cart);
+            if (itemEntry.getValue()>0){
             Integer newQuantity = itemEntry.getValue() - 1;
-            cart.replace(itemEntry.getKey(),newQuantity);
+                cart.replace(itemEntry.getKey(),newQuantity);
+            }
         }
     }
 }
