@@ -67,6 +67,8 @@ public class CartService implements ICartService{
             if (itemEntry.getValue()>0){
             Integer newQuantity = itemEntry.getValue() - 1;
                 cart.replace(itemEntry.getKey(),newQuantity);
+            }else {
+                cart.remove(product);
             }
         }
     }
