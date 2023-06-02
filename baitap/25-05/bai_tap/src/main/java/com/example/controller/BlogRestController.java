@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/adim/blog")
+@RequestMapping("api/blog")
 public class BlogRestController {
     @Autowired
     private IBlogService iBlogService;
@@ -25,18 +25,15 @@ public class BlogRestController {
     public ResponseEntity<List<Blog>> getAllBlog(){
         return new ResponseEntity<>(iBlogService.getAll(), HttpStatus.OK);
     }
-    @GetMapping("/category")
-    public ResponseEntity<List<Category>> getAllCategory(){
-        return new ResponseEntity<>(iCategoryService.findAll(),HttpStatus.OK);
-    }
-    @GetMapping("/category/{id}")
-    public ResponseEntity<List<Blog>> getAllBlogInCategory(@PathVariable("id") Integer id){
-        Category category=iCategoryService.findById(id);
-        return new ResponseEntity<>(iBlogService.findAllByCategory(category),HttpStatus.OK);
-    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Blog> detailBlogByPathVariable(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(iBlogService.getBlogById(id),HttpStatus.OK);
+    }
+    @GetMapping("/list/{id}")
+    public ResponseEntity<List<Blog>> getAllBlogInCategory(@PathVariable("id") Integer id){
+        Category category=iCategoryService.findById(id);
+        return new ResponseEntity<>(iBlogService.findAllByCategory(category),HttpStatus.OK);
     }
 
 }
