@@ -35,7 +35,7 @@ public class BlogRestController {
         return new ResponseEntity<>(iBlogService.findAllByCategory(category),HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Blog> detailByPathVariable(@PathVariable("id") Integer id) {
+    public ResponseEntity<Blog> detailBlogByPathVariable(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(iBlogService.getBlogById(id),HttpStatus.OK);
     }
 
