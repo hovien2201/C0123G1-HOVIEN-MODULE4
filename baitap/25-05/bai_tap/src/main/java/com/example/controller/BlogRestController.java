@@ -19,21 +19,19 @@ import java.util.List;
 public class BlogRestController {
     @Autowired
     private IBlogService iBlogService;
-    @Autowired
-    private ICategoryService iCategoryService;
+
     @GetMapping("")
     public ResponseEntity<List<Blog>> getAllBlog(){
         return new ResponseEntity<>(iBlogService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Blog> detailBlogByPathVariable(@PathVariable("id") Integer id) {
+    public ResponseEntity<Blog> showDetailBlogByPathVariable(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(iBlogService.getBlogById(id),HttpStatus.OK);
     }
     @GetMapping("/list/{id}")
-    public ResponseEntity<List<Blog>> getAllBlogInCategory(@PathVariable("id") Integer id){
-        Category category=iCategoryService.findById(id);
-        return new ResponseEntity<>(iBlogService.findAllByCategory(category),HttpStatus.OK);
+    public ResponseEntity<List<Blog>> getAllBlogInCategory(@PathVariable("id") Integer categoryId){
+        return new ResponseEntity<>(iBlogService.findAllByCategory(categoryId),HttpStatus.OK);
     }
 
 }

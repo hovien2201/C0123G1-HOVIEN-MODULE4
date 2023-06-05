@@ -17,6 +17,7 @@ public class BlogService implements IBlogService{
     @Autowired
     private IBlogRepository iBlogRepository;
 
+
     @Override
     public Page<Blog> getAll(int page) {
         return iBlogRepository.findAll(PageRequest.of(page,6,Sort.by("createAt").descending()));
@@ -48,7 +49,8 @@ public class BlogService implements IBlogService{
     }
 
     @Override
-    public List<Blog> findAllByCategory(Category category) {
-        return iBlogRepository.findAllByCategory(category);
+    public List<Blog> findAllByCategory(Integer categoryId) {
+
+        return iBlogRepository.findAllByCategory_CategoryId(categoryId);
     }
 }

@@ -18,5 +18,5 @@ public interface IBlogService {
     void delete(Integer id);
 
     List<Blog> findAllByTitle(String title);
-    List<Blog> findAllByCategory(Category category);
+    List<Blog> findAllByCategory(Integer categoryId);
 }
