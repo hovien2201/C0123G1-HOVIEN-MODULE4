@@ -4,6 +4,7 @@ import com.example.model.Blog;
 import com.example.model.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -17,6 +18,10 @@ public interface IBlogService {
 
     void delete(Integer id);
 
-    List<Blog> findAllByTitle(String title);
+    Page<Blog> findAllByTitle(String title,Pageable pageable);
     List<Blog> findAllByCategory(Integer categoryId);
+
+    List<Blog> searchBlogByTitle(String title);
+
+    List<Blog> loadMore(Integer number);
 }

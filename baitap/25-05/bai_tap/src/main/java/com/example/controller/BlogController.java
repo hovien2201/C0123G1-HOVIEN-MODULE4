@@ -6,6 +6,7 @@ import com.example.service.IBlogService;
 import com.example.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ public class BlogController {
     public String getAll(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         Page<Blog> blogList = iBlogService.getAll(page);
         model.addAttribute("blogList", blogList);
-        return "index";
+        return "listBlog";
     }
 
 
@@ -83,7 +84,8 @@ public class BlogController {
 
     @PostMapping("/search")
     public String search(@RequestParam("title") String title, Model model,@RequestParam(value = "page", defaultValue = "0") int page) {
-        List<Blog> blogList = iBlogService.findAllByTitle(title);
+        Pageable pageable= PageRequest.of(page,2);
+        Page<Blog> blogList = iBlogService.findAllByTitle(title,pageable);
         model.addAttribute("blogList", blogList);
         model.addAttribute("title", title);
         return "index";
