@@ -91,11 +91,11 @@
 
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-            v
+            <b th:text="${#authentication.getName()}"></b>
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <li><button class="dropdown-item" type="button">Setting</button></li>
-            <li><a th:href="@{/login}" class="btn"><button class="dropdown-item" type="button" >Logout</button></a></li>
+            <li><a th:href="@{/logout}" class="btn"><button class="dropdown-item" type="button" >Logout</button></a></li>
           </ul>
         </div>
 
