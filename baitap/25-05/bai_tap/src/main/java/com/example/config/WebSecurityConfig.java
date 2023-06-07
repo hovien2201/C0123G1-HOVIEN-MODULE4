@@ -28,8 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-
-
         // Cấu hình cho Login Form.
         http.authorizeRequests().antMatchers("/login").permitAll()
                 .antMatchers("/").permitAll()
